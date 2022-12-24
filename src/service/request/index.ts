@@ -4,6 +4,7 @@ import type { PLRequestConfig, PLRequestInterceptors } from './types'
 import { ElLoading } from 'element-plus'
 
 class PLRreuest {
+  // 实例
   instance: AxiosInstance
   interceptors: PLRequestInterceptors
   showLoading?: boolean
@@ -14,7 +15,7 @@ class PLRreuest {
     this.interceptors = config.interceptors
     this.showLoading = config.showLoading || false
 
-    // 从config中取出的拦截器是对应的实例的拦截器
+    // 从config中取出的拦截器 是 对应的实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors.requestInterceptor,
       this.interceptors.requestInterceptorCatch
@@ -45,7 +46,7 @@ class PLRreuest {
       (res) => {
         // 移除loading
         this.loading.close()
-        return res
+        return res.data
       },
       (err) => {
         // 移除loading
@@ -69,6 +70,7 @@ class PLRreuest {
       this.instance
         .request<any, T>(config)
         .then((res) => {
+          console.log('res', res)
           resolve(res)
         })
         .catch((err) => {
