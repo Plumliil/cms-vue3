@@ -1,7 +1,29 @@
 import { App } from 'vue'
-import { ElButton, ElForm, ElInput, ElRadio } from 'element-plus'
+import {
+  ElButton,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElRadio,
+  ElTabs,
+  ElTabPane,
+  ElIcon,
+  ElCheckbox,
+  ElLink
+} from 'element-plus'
 import 'element-plus/dist/index.css'
-const components = [ElButton, ElForm, ElInput, ElRadio]
+const components = [
+  ElButton,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElRadio,
+  ElTabs,
+  ElTabPane,
+  ElIcon,
+  ElCheckbox,
+  ElLink
+]
 
 export default function (app: App): void {
   components.forEach((item) => {
