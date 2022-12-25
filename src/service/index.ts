@@ -1,6 +1,9 @@
 // service 统一出口
 import PLRreuest from './request'
+import localCache from '../utils/cache'
+
 import { BASE_URL, TIME_OUT } from './request/config'
+console.log(BASE_URL)
 
 const plRequest = new PLRreuest({
   baseURL: BASE_URL,
@@ -8,15 +11,14 @@ const plRequest = new PLRreuest({
   showLoading: true,
   interceptors: {
     requestInterceptor: (config) => {
-      const token = ''
-      if (token) {
-        config.data.token = `Bearer ${token}`
+      const token = localCache.getCache('token')
+
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`
       }
-      console.log('请求成功拦截', config)
       return config
     },
     responseInterceptor: (config) => {
-      console.log('响应成功拦截')
       return config
     }
   }
