@@ -51,14 +51,6 @@ class PLRreuest {
       (err) => {
         // 移除loading
         this.loading.close()
-        switch (err.response.status) {
-          case 404:
-            console.log('404错误')
-            break
-          default:
-            console.log('400')
-            break
-        }
         return err
       }
     )
@@ -70,7 +62,6 @@ class PLRreuest {
       this.instance
         .request<any, T>(config)
         .then((res) => {
-          console.log('res', res)
           resolve(res)
         })
         .catch((err) => {
@@ -78,10 +69,10 @@ class PLRreuest {
         })
     })
   }
-  get<T>(config: PLRequestConfig): Promise<T> {
+  get<T>(config: any): Promise<T> {
     return this.request({ ...config, method: 'GET' })
   }
-  post<T>(config: PLRequestConfig): Promise<T> {
+  post<T>(config: any): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
   delete<T>(config: PLRequestConfig): Promise<T> {
