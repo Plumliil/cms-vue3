@@ -2,12 +2,13 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.png" alt="logo" />
-      <span class="title">cms-vue3+ts</span>
+      <!-- <span v-if="!collapse" class="title">cms-vue3+ts</span> -->
     </div>
     <el-menu
       default-active="2"
       class="el-menu-vertical"
       :unique-opened="true"
+      :collapse="collapse"
       background-color="#0c2135"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
@@ -18,11 +19,15 @@
           <!-- 二级菜单可展开标题 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
+              <el-icon><Menu /></el-icon>
               <span>{{ item.name }}</span>
             </template>
             <!-- 遍历里面item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id + ''">
+              <el-menu-item
+                @click="handleItemClick(subitem)"
+                :index="subitem.id + ''"
+              >
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
@@ -41,16 +46,28 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useStore } from '@/store'
-// import { useStore } from 'vuex'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default defineComponent({
+  props: {
+    collapse: {
+      type: Boolean,
+      defaul: false
+    }
+  },
   setup() {
     const store = useStore()
+    const router = useRouter()
     const userMenus = computed(() => store.state.login.userMenus)
-    console.log(userMenus)
-
+    const handleItemClick = (item: any) => {
+      store.commit('setCurPage', item)
+      router.push({
+        path: item.url ?? '/not-fount'
+      })
+    }
     return {
-      userMenus
+      userMenus,
+      handleItemClick
     }
   }
 })
@@ -77,6 +94,9 @@ export default defineComponent({
     font-size: 20px;
     font-weight: 700;
     color: white;
+  }
+  .el-menu {
+    border-right: none;
   }
   .el-submenu {
     background-color: #001529 !important;
