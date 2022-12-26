@@ -67,6 +67,10 @@ export default defineComponent({
 <style scoped lang="less">
 .login-panel {
   width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .account-control {
     display: flex;
     justify-content: space-around;
