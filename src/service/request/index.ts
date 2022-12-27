@@ -56,7 +56,7 @@ class PLRreuest {
     )
   }
 
-  request<T>(config: PLRequestConfig): Promise<T> {
+  request<T = any>(config: PLRequestConfig): Promise<T> {
     return new Promise((resolve, reject) => {
       // 单个请求对数据处理
       this.instance
@@ -69,16 +69,16 @@ class PLRreuest {
         })
     })
   }
-  get<T>(config: any): Promise<T> {
+  get<T = any>(config: any): Promise<T> {
     return this.request({ ...config, method: 'GET' })
   }
-  post<T>(config: any): Promise<T> {
+  post<T = any>(config: any): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
-  delete<T>(config: PLRequestConfig): Promise<T> {
+  delete<T = any>(config: PLRequestConfig): Promise<T> {
     return this.request({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: PLRequestConfig): Promise<T> {
+  patch<T = any>(config: PLRequestConfig): Promise<T> {
     return this.request({ ...config, method: 'PATCH' })
   }
 }
