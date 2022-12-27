@@ -1,6 +1,6 @@
 import { ILoginState } from './login/types'
 export interface IRootState {
-  name: string
+  curPage: any
 }
 
 export interface IRootWithModule {
