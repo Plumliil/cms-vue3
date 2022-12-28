@@ -1,32 +1,36 @@
 <template>
   <div class="user">
-    <div class="search">
-      <pl-form v-bind="searchFormConfig"></pl-form>
-    </div>
-    <div class="content"></div>
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetBtnClick"
+      @queryBtnClick="handleQueryBtnClick"
+    ></page-search>
+    <page-content
+      ref="pageContentRef"
+      pageName="users"
+      :contentTableConfig="contentTableConfig"
+    ></page-content>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import PlForm from '@/base-ui/form'
-import searchFormConfig from './config/search.config'
+import { defineComponent, computed, ref } from 'vue'
+import pageSearch from '@/components/page-search'
+import pageContent from '@/components/page-content'
 export default defineComponent({
   name: 'user',
   components: {
-    PlForm
-  },
-  setup() {
-    return {
-      searchFormConfig
-    }
+    pageSearch,
+    pageContent
   }
 })
 </script>
+<script setup lang="ts">
+import searchFormConfig from './config/search.config'
+import contentTableConfig from './config/content.config'
+import { usePageSearch } from '@/hooks/usePageSearch'
 
-<style scoped lang="less">
-.user {
-  .search {
-  }
-}
-</style>
+const [pageContentRef, handleResetBtnClick, handleQueryBtnClick] =
+  usePageSearch()
+</script>
+<style scoped lang="less"></style>
