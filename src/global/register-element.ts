@@ -1,4 +1,6 @@
 import { App } from 'vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 import {
   ElButton,
   ElForm,
@@ -18,7 +20,22 @@ import {
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
-  ElSubMenu
+  ElSubMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElDatePicker,
+  ElSelect,
+  ElOption,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
+  ElImage
 } from 'element-plus'
 import 'element-plus/dist/index.css'
 const components = [
@@ -40,11 +57,29 @@ const components = [
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
-  ElSubMenu
+  ElSubMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElDatePicker,
+  ElSelect,
+  ElOption,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
+  ElImage
 ]
 
 export default function (app: App): void {
   components.forEach((item) => {
     app.component(item.name, item)
   })
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+  }
 }
