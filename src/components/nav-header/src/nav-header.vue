@@ -5,28 +5,32 @@
       <Fold v-else />
     </el-icon>
     <div class="content">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ breadcrumbName }}</el-breadcrumb-item>
-      </el-breadcrumb>
+      <pl-breadcrumb :breadcrumbs="breadcrumbs" />
       <user-info></user-info>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import UserInfo from './user-info.vue'
+import PlBreadcrumb from '@/base-ui/breadcrumb/index'
+import { pathMapToBreadcrumb } from '@/utils/mapMenus'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 export default defineComponent({
   emits: ['foldChange'],
   components: {
-    UserInfo
+    UserInfo,
+    PlBreadcrumb
   },
   setup(props, { emit }) {
     const store = useStore()
-    const breadcrumbName = 'route.name'
-    console.log(store.state.curPage)
+    const route = useRoute()
+    const userMenus = store.state.login.userMenus
+    const breadcrumbs = computed(() => {
+      return pathMapToBreadcrumb(userMenus, route.path)
+    })
 
     const isFold = ref(false)
     const handelFoldClick = () => {
@@ -35,7 +39,7 @@ export default defineComponent({
     }
     return {
       isFold,
-      breadcrumbName,
+      breadcrumbs,
       handelFoldClick
     }
   }
