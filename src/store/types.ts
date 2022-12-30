@@ -1,6 +1,8 @@
 import { ILoginState } from './login/types'
 export interface IRootState {
   curPage: any
+  entireDepartment: any[]
+  entireRole: any[]
 }
 
 export interface IRootWithModule {

@@ -75,10 +75,10 @@ class PLRreuest {
   post<T = any>(config: any): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
-  delete<T = any>(config: PLRequestConfig): Promise<T> {
+  delete<T = any>(config: any): Promise<T> {
     return this.request({ ...config, method: 'DELETE' })
   }
-  patch<T = any>(config: PLRequestConfig): Promise<T> {
+  patch<T = any>(config: any): Promise<T> {
     return this.request({ ...config, method: 'PATCH' })
   }
 }

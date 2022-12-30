@@ -3,7 +3,6 @@ import PLRreuest from './request'
 import localCache from '../utils/cache'
 
 import { BASE_URL, TIME_OUT } from './request/config'
-console.log(BASE_URL)
 
 const plRequest = new PLRreuest({
   baseURL: BASE_URL,
