@@ -8,13 +8,14 @@ import localCache from '../../utils/cache'
 import { ILoginState } from './types'
 import { IRootState } from '../types'
 import router from '@/router'
-import { mapMenusToRoute } from '@/utils/mapMenus'
+import { mapMenusToPermissions, mapMenusToRoute } from '@/utils/mapMenus'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state: {
     token: '',
     userInfo: {},
-    userMenus: null
+    userMenus: null,
+    permissions: []
   },
   mutations: {
     changeToken(state, token: string) {
@@ -30,15 +31,21 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+
+      // 获取用户按钮权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: any) {
+    async accountLoginAction({ commit, dispatch }, payload: any) {
       // 登录获取token
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+      // 初始化请求
+      dispatch('getInitialDataAction', null, { root: true })
       // 请求用户信息
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
