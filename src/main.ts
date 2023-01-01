@@ -10,8 +10,10 @@ const app = createApp(App)
 
 // element-plus注册
 app.use(globalRegister)
-app.use(router)
 app.use(store)
 // 刷新后重新获取数据
 setupStore()
+// 路由匹配之前先注册
+app.use(router)
+
 app.mount('#app')

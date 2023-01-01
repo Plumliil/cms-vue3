@@ -35,7 +35,10 @@ import {
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog,
+  ElCard,
+  ElTree
 } from 'element-plus'
 import 'element-plus/dist/index.css'
 const components = [
@@ -72,7 +75,10 @@ const components = [
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog,
+  ElCard,
+  ElTree
 ]
 
 export default function (app: App): void {

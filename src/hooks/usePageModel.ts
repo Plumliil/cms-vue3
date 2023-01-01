@@ -3,7 +3,8 @@ import pageModel from '@/components/page-model'
 interface IpageModeNew extends InstanceType<typeof pageModel> {
   dialogVisible: boolean
 }
-type CallbackFn = () => void
+type CallbackFn = (item?: any) => void
+// type EditCallbackFn = (item?: any) => void
 
 export function usePageModel(newCb?: CallbackFn, editCb?: CallbackFn): any {
   const pageModelRef = ref<IpageModeNew>()
@@ -12,8 +13,7 @@ export function usePageModel(newCb?: CallbackFn, editCb?: CallbackFn): any {
     defaultInfo.value = {}
     if (pageModelRef.value) {
       pageModelRef.value.dialogVisible = true
-
-      newCb && newCb()
+      newCb && newCb(undefined)
     }
   }
   const handleEditData = (item: any) => {
@@ -21,7 +21,7 @@ export function usePageModel(newCb?: CallbackFn, editCb?: CallbackFn): any {
     if (pageModelRef.value) {
       pageModelRef.value.dialogVisible = true
     }
-    editCb && editCb()
+    editCb && editCb(item)
   }
   return [pageModelRef, defaultInfo, handleNewData, handleEditData]
 }

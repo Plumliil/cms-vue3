@@ -3,12 +3,14 @@ import { IRootState, IStoreType } from './types'
 import { getPageListData } from '@/service/main/system/system'
 import login from './login'
 import system from './main/system/system'
+import dashboard from './main/dashboard/analyisis'
 import { Store } from 'element-plus/es/components/table/src/store'
 const store = createStore<IRootState>({
   state: {
     curPage: {},
     entireDepartment: [],
-    entireRole: []
+    entireRole: [],
+    entireMenu: []
   },
   mutations: {
     setCurPage(state, payload) {
@@ -19,6 +21,9 @@ const store = createStore<IRootState>({
     },
     changeEntireRole(state, list) {
       state.entireRole = list
+    },
+    changeEntireMenu(state, list) {
+      state.entireMenu = list
     }
   },
   getters: {},
@@ -30,20 +35,23 @@ const store = createStore<IRootState>({
         size: 1000
       })
       const { list: departmentList } = departmentResult.data
-      console.log(departmentList)
       const roleResult = await getPageListData('/role/list', {
         offset: 0,
         size: 1000
       })
       const { list: roleList } = roleResult.data
-      console.log(roleList)
+      const menuResult = await getPageListData('/menu/list', {})
+      const { list: menuList } = menuResult.data
+
       commit('changeEntireDepartment', departmentList)
       commit('changeEntireRole', roleList)
+      commit('changeEntireMenu', menuList)
     }
   },
   modules: {
     login,
-    system
+    system,
+    dashboard
   }
 })
 

@@ -5,7 +5,7 @@
       <!-- <span v-if="!collapse" class="title">cms-vue3+ts</span> -->
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       :unique-opened="true"
       :collapse="collapse"
@@ -45,9 +45,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { pathMapToMenus } from '@/utils/mapMenus'
 export default defineComponent({
   props: {
     collapse: {
@@ -56,17 +57,25 @@ export default defineComponent({
     }
   },
   setup() {
+    // store
     const store = useStore()
-    const router = useRouter()
     const userMenus = computed(() => store.state.login.userMenus)
+    // router
+    const router = useRouter()
+    const route = useRoute()
+    const curPath = route.path
+    // data
+    const menu = pathMapToMenus(store.state.login.userMenus, curPath)
+    const defaultValue = ref(menu.id + '')
+
     const handleItemClick = (item: any) => {
-      store.commit('setCurPage', item)
       router.push({
         path: item.url ?? '/not-fount'
       })
     }
     return {
       userMenus,
+      defaultValue,
       handleItemClick
     }
   }

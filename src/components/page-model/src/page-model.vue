@@ -22,6 +22,10 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  otherInfo: {
+    type: Object,
+    default: () => ({})
+  },
   pageName: {
     type: String,
     required: true
@@ -51,7 +55,7 @@ const handleConfirmClick = () => {
     // 有值编辑
     store.dispatch('system/editPageDataAction', {
       pageName: props.pageName,
-      editData: { ...formData.value },
+      editData: { ...formData.value, ...props.otherInfo },
       id: props.defaultInfo.id
     })
   } else {
@@ -60,7 +64,7 @@ const handleConfirmClick = () => {
     // 无值新建
     store.dispatch('system/createPageDataAction', {
       pageName: props.pageName,
-      newData: { ...formData.value }
+      newData: { ...formData.value, ...props.otherInfo }
     })
   }
 }
@@ -79,6 +83,7 @@ defineExpose({
       center
     >
       <pl-form v-model="formData" v-bind="modelConfig"></pl-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
